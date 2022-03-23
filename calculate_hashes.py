@@ -1,13 +1,13 @@
 import hashlib, binascii
 
-text = 'hello world'
+text = 'exercise-cryptography'
 data = text.encode("utf8")
 
 sha256hash = hashlib.sha256(data).digest()
-print("SHA256:   ", binascii.hexlify(sha256hash))
+print("SHA256:   ", "0x" + binascii.hexlify(sha256hash).decode('utf-8'))
 
-sha512 = hashlib.sha512(data).digest()
-print("SHA512: ", binascii.hexlify(sha512))
+sha512hash = hashlib.sha512(data).digest()
+print("SHA512: ", "0x" + binascii.hexlify(sha512hash).decode('utf-8'))
 
 ripemd160 = hashlib.new('ripemd160', data).digest()
-print("RIPEMD-160:", binascii.hexlify(ripemd160)) 
+print("RIPEMD-160:", "0x" + binascii.hexlify(ripemd160).decode('utf-8')) 

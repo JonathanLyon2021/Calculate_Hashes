@@ -2,7 +2,9 @@ from flask import Flask, request
 import scrypt
 import hashlib
 import hmac
+import binascii
 import json
+import os
 
 app =Flask(__name__)
 
@@ -16,9 +18,10 @@ def sha256_endpoint():
     if not all(k in values for k in required):
         return "Missing values", 400
 
-	# TODO: Not Implemented Yet
+    sha256hash = hashlib.sha256(values["msg"].encode("utf-8")).digest()
+
 	
-    response = {"hash": "TODO"}
+    response = {"hash": "0x" + sha256hash.hex()}
 
     return json.dumps(response), 201
 
@@ -31,10 +34,10 @@ def sha512_endpoint():
     required = ["msg"]
     if not all(k in values for k in required):
         return "Missing values", 400
-
-    # TODO: Not Implemented Yet
+    
+    sha512hash = hashlib.sha512(values["msg"].encode("utf-8")).digest()
 	
-    response = {"hash": "TODO"}
+    response = {"hash": "0x" + sha512hash.hex()}
 
     return json.dumps(response), 201
 
@@ -47,10 +50,8 @@ def ripemd160_endpoint():
     required = ["msg"]
     if not all(k in values for k in required):
         return "Missing values", 400
-
-    # TODO: Not Implemented Yet
-	
-    response = {"hash": "TODO"}
+    ripemd160hash = hashlib.ripemd160(values["msg"].encode("utf-8")).digest()
+    response = {"hash": "0x" + ripemd160hash.hex()}
 
     return json.dumps(response), 201
 

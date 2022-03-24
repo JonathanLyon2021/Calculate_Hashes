@@ -65,9 +65,13 @@ def hmac_endpoint():
     if not all(k in values for k in required):
         return "Missing values", 400
 
-    # TODO: Not Implemented Yet
-	
-    response = {"hmac": "TODO"}
+    key = binascii.hexlify(b'secret')
+    msg = "exercise-cryptography".encode('utf-8')
+
+    newHMAC =hmac.new(key, msg, hashlib.sha256).digest()
+
+    #print(newHMAC.hex())
+    response = {"hmac": "0x" + newHMAC.hex()}
 
     return json.dumps(response), 201
 
@@ -81,9 +85,14 @@ def scrypt_endpoint():
     if not all(k in values for k in required):
         return "Missing values", 400
 
-    # TODO: Not Implemented Yet
+    passwd = "secret"
+    salt = os.urandom(32) 
+    print("Salt: ", binascii.hexlify(salt))
+
+    key = scrypt.hash(passwd, salt, 16384, 16, 1, 32)
+    #print("Derived key: ", binascii.hexlify(key))
 	
-    response = {"key": "TODO"}
+    response = {"key": "0x" + binascii.hexlify(key).decode()}
 
     return json.dumps(response), 201
 
